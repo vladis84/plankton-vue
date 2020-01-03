@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Plankton Vue</title>
+  <title>Planktons Vue</title>
   <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
   <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css"/>
 
@@ -13,11 +13,16 @@
   <span class="navbar-text">Пример реализации справочника на Vue + Bootstrap 4</span>
 </nav>
 <div class="container mt-4" id="app">
-
   <h1>Справочник планктона</h1>
   <b-tabs>
-    <b-tab v-for="item in items" v-bind:active="item.active" v-bind:title="item.text">
-      <p>{{item.text}}</p>
+    <b-tab title="Справочник планктончиков">
+      <planktons></planktons>
+    </b-tab>
+    <b-tab title="Справочник офисов">
+      <b-table striped hover :items="offices"></b-table>
+    </b-tab>
+    <b-tab title="JSON">
+      <pre>{{json}}</pre>
     </b-tab>
   </b-tabs>
 </div>
@@ -25,51 +30,8 @@
 <script src="https://unpkg.com/vue@latest/dist/vue.js"></script>
 <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
 <script src="https://unpkg.com/vuex@2.0.0/dist/vuex.js"></script>
-<script>
-    const store = new Vuex.Store({
-        state: {
-            offices: [],
-            planktons: [],
-        },
-        mutations: {
-            'SET_STORE'(state, data) {
-                state.offices = data.offices;
-                state.planktons = data.planktons;
-            }
-        },
-        actions: {
-            initStore: ({commit}) => {
-                axios.get('data.json')
-                    .then((response) => {
-                        commit('SET_STORE', response.data);
-                    })
-            }
-        }
-    });
-
-    new Vue({
-        el: "#app",
-        store,
-        data: {
-            items: [
-                {text: 'Планктончики', active: true},
-                {text: 'Справочник планктончиков', active: false},
-                {text: 'Справочник офисов', active: false},
-                {text: 'JSON', active: false},
-            ]
-        },
-        created() {
-            this.$store.dispatch('initStore');
-        },
-        computed: {
-            name() {
-                return this.$store.state.name;
-            },
-            product() {
-                return this.$store.state.product;
-            }
-        }
-    });
-</script>
+<script src="js/store.js"></script>
+<script src="js/planktons.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>
