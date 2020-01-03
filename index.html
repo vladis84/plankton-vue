@@ -2,33 +2,54 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Plankton Vue</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css" />
+  <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css" />
 
 </head>
 <body>
-<div class="container" id="app">
-  <h5 v-text="name"></h5>
-  <div class="row">
-    <div class="col">ID:</div>
-    <div v-text="product.id" class="col"></div>
-    <pre> {{foo[123]}}</pre>
+<nav class="navbar navbar-dark navbar-expand-lg bg-info">
+  <span class="navbar-text">Пример реализации справочника на Vue + Bootstrap 4</span>
 
+</nav>
+<div class="container mt-4" id="app">
+
+  <h1>Справочник планктона</h1>
+  <b-nav tabs justified>
+    <b-nav-item active>Планктончики</b-nav-item>
+    <b-nav-item>Справочник планктончиков</b-nav-item>
+    <b-nav-item>Справочник офисов</b-nav-item>
+    <b-nav-item>JSON</b-nav-item>
+  </b-nav>
+  <div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">...</div>
+    <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">...</div>
+    <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">...</div>
   </div>
-
 </div>
-<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://unpkg.com/vue@latest/dist/vue.js"></script>
+<script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
 <script src="https://unpkg.com/vuex@2.0.0/dist/vuex.js"></script>
 <script>
     const store = new Vuex.Store({
         state: {
-            name: "Магазин",
-            product: {
-                id: 5,
-                name: "Носки",
-                price: 5000,
-                currency: "RUB"
+            offices: [],
+            planktons: [],
+        },
+        mutations: {
+            'SET_STORE' (state, data) {
+                state.offices = data.offices;
+                state.planktons = data.planktons;
+            }
+        },
+        actions: {
+            initStore: ({commit}) => {
+                axios.get('data.json')
+                .then((response) => {
+                    commit('SET_STORE', response.data);
+                })
             }
         }
     });
@@ -38,6 +59,9 @@
         store,
         data: {
             foo: 123
+        },
+        created() {
+            this.$store.dispatch('initStore');
         },
         computed: {
             name() {
