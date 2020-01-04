@@ -9,6 +9,9 @@ const store = new Vuex.Store({
         },
         offices(state) {
             return state.offices;
+        },
+        office(state) {
+            return (id) => state.offices.find(office => office.id == id);
         }
     },
     mutations: {
