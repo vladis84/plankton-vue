@@ -6,7 +6,6 @@
   <title>Planktons Vue</title>
   <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
   <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css"/>
-
 </head>
 <body>
 <nav class="navbar navbar-dark navbar-expand-lg bg-info">
@@ -19,7 +18,7 @@
       <planktons></planktons>
     </b-tab>
     <b-tab title="Справочник офисов">
-      <b-table striped hover :items="offices"></b-table>
+      <offices></offices>
     </b-tab>
     <b-tab title="JSON">
       <pre>{{json}}</pre>
@@ -32,6 +31,7 @@
 <script src="https://unpkg.com/vuex@2.0.0/dist/vuex.js"></script>
 <script src="js/store.js"></script>
 <script src="js/planktons.js"></script>
+<script src="js/offices.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>
