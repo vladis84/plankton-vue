@@ -33,11 +33,7 @@ Vue.component('office-dialog', {
     `,
     data() {
         return {
-            office: {
-                id: null,
-                name: 'Новый офис',
-                address: 'Новый адрес'
-            }
+            office: {}
         }
     },
     computed: {
@@ -107,9 +103,16 @@ Vue.component('offices', {
 
     methods: {
         edit(office = null) {
-            if (office) {
-                this.$refs.officeDialog.office = Object.assign({}, office);
+
+            if (!office) {
+                office = {
+                    id: null,
+                    name: 'Новый офис',
+                    address: 'Новый адрес'
+                }
             }
+
+            this.$refs.officeDialog.office = Object.assign({}, office);
 
             $(this.$refs.officeDialog.$el).modal('show');
 
