@@ -30,8 +30,25 @@
 <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
 <script src="https://unpkg.com/vuex@2.0.0/dist/vuex.js"></script>
 <script src="js/store.js"></script>
+<script src="js/my-dialog.js"></script>
 <script src="js/planktons.js"></script>
 <script src="js/offices.js"></script>
-<script src="js/app.js"></script>
+<script>
+    new Vue({
+        el: "#app",
+        store,
+        created() {
+            this.$store.dispatch('initStore');
+        },
+        computed: {
+            offices() {
+                return this.$store.getters.offices;
+            },
+            json() {
+                return this.$store.state;
+            }
+        }
+    });
+</script>
 </body>
 </html>
