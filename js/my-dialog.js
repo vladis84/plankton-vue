@@ -3,7 +3,8 @@ Vue.component('my-dialog', {
 <b-modal
   :title="title"
   v-model="show"
-  @bv::modal::hide="close"
+  @close="close"
+  ref="my-modal"
 >
   <b-form>
     <b-form-group v-for="(field, key) in fields"
@@ -55,7 +56,8 @@ Vue.component('my-dialog', {
         }
     },
     methods: {
-        close() {
+        close(evt) {
+            evt.preventDefault();
             this.$emit('form-close');
         },
         save() {
