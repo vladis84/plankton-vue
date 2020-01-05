@@ -26,7 +26,7 @@ Vue.component('my-dialog', {
       <b-button
         variant="secondary"
         class="mr-2"
-        v-on:click="reset"
+        v-on:click="close"
       >
         Отмена
       </b-button>

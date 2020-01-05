@@ -14,7 +14,7 @@ Vue.component('offices', {
           </template>
         </b-table>
         <my-dialog
-          :show="form.show"
+          :show="formShow"
           title="Добавить офис"
           :fields="formFields()"
           @form-close="formShow=false"
