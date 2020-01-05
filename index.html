@@ -6,7 +6,11 @@
   <title>Planktons Vue</title>
   <link rel="icon" href="favicon.ico">
   <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
-  <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.css"/>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
 </head>
 <body>
 <nav class="navbar navbar-dark navbar-expand-lg bg-info">
@@ -14,25 +18,59 @@
 </nav>
 <div class="container mt-4" id="app">
   <h1>Справочник планктона</h1>
-  <b-tabs>
-    <b-tab title="Справочник планктончиков">
-      <planktons></planktons>
-    </b-tab>
-    <b-tab title="Справочник офисов">
+  <ul class="nav nav-tabs" role="tablist">
+    <li class="nav-item">
+      <a
+        class="nav-link" id="planktons-tab" data-toggle="tab"
+        role="tab" aria-controls="planktons" aria-selected="false"
+        href="#planktons"
+      >
+        Справочник планктончиков
+      </a>
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link active" id="offices-tab" data-toggle="tab"
+        role="tab" aria-controls="offices" aria-selected="true"
+        href="#offices"
+      >
+        Справочник офисов
+      </a>
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link" id="json-tab" data-toggle="tab"
+        role="tab" aria-controls="json" aria-selected="false"
+        href="#json"
+      >
+        JSON
+      </a>
+    </li>
+  </ul>
+  <div class="tab-content">
+    <div
+      class="tab-pane fade" id="planktons"
+      role="tabpanel" aria-labelledby="planktons-tab"
+    >
+      ...
+    </div>
+    <div
+      class="tab-pane fade show active"
+      id="offices" role="tabpanel" aria-labelledby="offices-tab"
+    >
       <offices></offices>
-    </b-tab>
-    <b-tab title="JSON">
+    </div>
+    <div
+      class="tab-pane fade"
+      id="json" role="tabpanel" aria-labelledby="json-tab"
+    >
       <pre>{{json}}</pre>
-    </b-tab>
-  </b-tabs>
+    </div>
+  </div>
 </div>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://unpkg.com/vue@latest/dist/vue.js"></script>
-<script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.min.js"></script>
 <script src="https://unpkg.com/vuex@2.0.0/dist/vuex.js"></script>
 <script src="js/store.js"></script>
-<script src="js/my-dialog.js"></script>
-<script src="js/planktons.js"></script>
 <script src="js/offices.js"></script>
 <script>
     new Vue({

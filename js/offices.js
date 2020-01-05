@@ -1,70 +1,121 @@
+Vue.component('office-dialog', {
+    template: `
+      <div class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">{{title}}</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="form-group">
+                  <label for="office-name">Название</label>
+                  <input type="text" class="form-control" id="office-name" v-model="office.name">
+                  <small class="form-text text-muted">Укажите название офиса</small>
+                </div>
+                <div class="form-group">
+                  <label for="office-address">Адрес</label>
+                  <input type="text" class="form-control" id="office-address" v-model="office.address">
+                  <small class="form-text text-muted">Укажите адрес офиса</small>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+              <button type="button" class="btn btn-primary">Сохранить</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    `,
+    data() {
+        return {
+            office: {
+                id: null,
+                name: 'Новый офис',
+                address: 'Новый адрес'
+            }
+        }
+    },
+    computed: {
+        title() {
+            let title = 'Добавить офис';
+
+            if (this.office.id) {
+                title = 'Изменить офис';
+            }
+
+            return title;
+        }
+    }
+});
 Vue.component('offices', {
     template: `
       <div class="card mt-4">
         <div class="card-header">
           Таблица офисов для планктончиков
           <div class="float-right">
-            <b-btn variant="primary" @click="formShow=true">Добавить</b-btn>
+            <button type="button" class="btn btn-primary" @click="edit()">Добавить</button>
           </div>
         </div>
-        <b-table striped hover :items="items" :fields="fields">
-          <template v-slot:cell(action)>
-            <b-btn variant="outline-primary">Изменить</b-btn>
-            <b-btn variant="outline-danger ml-1">Удалить</b-btn>
-          </template>
-        </b-table>
-        <my-dialog
-          :show="formShow"
-          title="Добавить офис"
-          :fields="formFields()"
-          @form-close="formShow=false"
-        >
-        </my-dialog>
+        <table class="table table-striped table-hover">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Название</th>
+            <th>Адрес</th>
+            <th>Управление</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="item in items" v-bind:key="item.id">
+            <td>{{item.id}}</td>
+            <td>{{item.name}}</td>
+            <td>{{item.address}}</td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+                @click="edit(item)"
+              >
+                Изменить
+              </button>
+              <button
+                type="button"
+                class="btn btn-outline-danger ml-1"
+              >
+                Удалить
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <office-dialog ref="officeDialog"/>
       </div>`,
 
     computed: {
         items() {
             return this.$store.getters.offices;
         },
-    },
-
-    data: function () {
-        return {
-            fields: [
-                {key: 'id', label: 'ID'},
-                {key: 'name', label: 'Название'},
-                {key: 'address', label: 'Адрес'},
-                {key: 'action', label: 'Управление'},
-            ],
-            formShow: false,
-        };
+        officeDialog() {
+            return this.$refs.officeDialog;
+        }
     },
 
     methods: {
-        save() {
-        },
-        reset() {
-            this.showForm = false;
-        },
-        formFields(values = []) {
-            if (values.length === 0) {
-                values.push('Новый офис', 'Новый адрес');
+        edit(office = null) {
+            if (office) {
+                this.$refs.officeDialog.office = Object.assign({}, office);
             }
 
-            return [
-                {
-                    title: 'Название',
-                    name: 'name',
-                    description: 'Укажите название офиса',
-                    value: values[0]
-                },
-                {
-                    title: 'Адрес',
-                    name: 'address',
-                    description: 'Укажите адрес офиса',
-                    value: values[1]
-                }
-            ]
-        }
+            $(this.$refs.officeDialog.$el).modal('show');
+
+        },
+        save() {
+
+        },
     }
 });

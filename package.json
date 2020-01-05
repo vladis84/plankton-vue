@@ -2,10 +2,8 @@
   "name": "untitled",
   "version": "0.1.0",
   "private": true,
-  "web-types": "./web-types.json",
   "dependencies": {
     "vue": "^2.6.10",
-    "bootstrap-vue": "^2.1.0",
     "vuex": "*"
   }
 }

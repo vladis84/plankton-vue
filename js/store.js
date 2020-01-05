@@ -22,10 +22,9 @@ const store = new Vuex.Store({
     },
     actions: {
         initStore ({commit}) {
-            axios.get('data.json')
-                .then((response) => {
-                    commit('SET_STORE', response.data);
-                })
+            $.get('data.json', function (data) {
+                commit('SET_STORE', data);
+            });
         }
     }
 });
