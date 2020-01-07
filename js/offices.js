@@ -25,7 +25,7 @@ Vue.component('office-dialog', {
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-              <button type="button" class="btn btn-primary">Сохранить</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" @click="$emit('save', office)">Сохранить</button>
             </div>
           </div>
         </div>
@@ -54,7 +54,13 @@ Vue.component('offices', {
         <div class="card-header">
           Таблица офисов для планктончиков
           <div class="float-right">
-            <button type="button" class="btn btn-primary" @click="edit()">Добавить</button>
+            <button 
+              type="button" 
+              class="btn btn-primary" 
+              @click="edit({name:'Новый офис', address: 'Новый адрес'})"
+            >
+              Добавить
+            </button>
           </div>
         </div>
         <table class="table table-striped table-hover">
@@ -89,7 +95,7 @@ Vue.component('offices', {
           </tr>
           </tbody>
         </table>
-        <office-dialog ref="officeDialog"/>
+        <office-dialog ref="officeDialog" @save="save($event)"/>
       </div>`,
 
     computed: {
@@ -102,23 +108,12 @@ Vue.component('offices', {
     },
 
     methods: {
-        edit(office = null) {
-
-            if (!office) {
-                office = {
-                    id: null,
-                    name: 'Новый офис',
-                    address: 'Новый адрес'
-                }
-            }
-
+        edit(office) {
             this.$refs.officeDialog.office = Object.assign({}, office);
-
             $(this.$refs.officeDialog.$el).modal('show');
-
         },
-        save() {
-
+        save(office) {
+            this.$store.dispatch('saveOffice', {office});
         },
     }
 });
