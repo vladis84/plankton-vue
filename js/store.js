@@ -31,6 +31,10 @@ const store = new Vuex.Store({
             }
 
         },
+        REMOVE_OFFICE(state, office) {
+            const key = state.offices.findIndex(_office => _office.id === office.id);
+            state.offices.splice(key, 1);
+        }
     },
     actions: {
         initStore ({commit}) {
@@ -40,6 +44,9 @@ const store = new Vuex.Store({
         },
         saveOffice({commit}, {office}) {
             commit('SAVE_OFFICE', office);
+        },
+        removeOffice({commit}, {office}) {
+            commit('REMOVE_OFFICE', office);
         }
     }
 });

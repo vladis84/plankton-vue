@@ -88,6 +88,7 @@ Vue.component('offices', {
               <button
                 type="button"
                 class="btn btn-outline-danger ml-1"
+                @click="remove(item)"
               >
                 Удалить
               </button>
@@ -115,5 +116,8 @@ Vue.component('offices', {
         save(office) {
             this.$store.dispatch('saveOffice', {office});
         },
+        remove(office) {
+            this.$store.dispatch('removeOffice', {office});
+        }
     }
 });
