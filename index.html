@@ -16,7 +16,9 @@
 <nav class="navbar navbar-dark navbar-expand-lg bg-info">
   <span class="navbar-text">Пример реализации справочника на Vue + Bootstrap 4</span>
 </nav>
+
 <div class="container mt-4" id="app">
+  <plankton-dialog ref="planktonDialog"></plankton-dialog>
   <h1>Справочник планктона</h1>
   <ul class="nav nav-tabs" role="tablist">
     <li class="nav-item">
@@ -24,6 +26,15 @@
         class="nav-link active" id="planktons-tab" data-toggle="tab"
         role="tab" aria-controls="planktons" aria-selected="false"
         href="#planktons"
+      >
+        Планктончики
+      </a>
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link" id="plankton-table-tab" data-toggle="tab"
+        role="tab" aria-controls="planktons" aria-selected="false"
+        href="#plankton-table"
       >
         Справочник планктончиков
       </a>
@@ -52,7 +63,13 @@
       class="tab-pane fade show active" id="planktons"
       role="tabpanel" aria-labelledby="planktons-tab"
     >
-      <planktons></planktons>
+      <planktons v-bind:dialog="planktonDialog"></planktons>
+    </div>
+    <div
+      class="tab-pane fade show" id="plankton-table"
+      role="tabpanel" aria-labelledby="plankton-table-tab"
+    >
+      <plankton-table v-bind:dialog="planktonDialog"></plankton-table>
     </div>
     <div
       class="tab-pane fade"
@@ -71,7 +88,9 @@
 <script src="https://unpkg.com/vue@latest/dist/vue.js"></script>
 <script src="https://unpkg.com/vuex@2.0.0/dist/vuex.js"></script>
 <script src="js/store.js"></script>
+<script src="js/plankton-dialog.js"></script>
 <script src="js/planktons.js"></script>
+<script src="js/plankton-table.js"></script>
 <script src="js/offices.js"></script>
 <script>
     new Vue({
@@ -80,14 +99,21 @@
         created() {
             this.$store.dispatch('initStore');
         },
+        mounted() {
+            this.planktonDialog = this.$refs.planktonDialog;
+        },
+
+        data() {
+            return {
+                planktonDialog: {},
+            }
+        },
+
         computed: {
-            offices() {
-                return this.$store.getters.offices;
-            },
             json() {
                 return this.$store.state;
             }
-        }
+        },
     });
 </script>
 </body>
