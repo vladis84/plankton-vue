@@ -31,10 +31,27 @@ const store = new Vuex.Store({
             }
 
         },
+        SAVE_PLANKTON(state, newPlankton) {
+            const oldPlankton = state.planktons.find(plankton => plankton.id === newPlankton.id);
+
+            if (oldPlankton) {
+                Object.assign(oldPlankton, newPlankton);
+            }
+            else {
+                newPlankton.id = state.planktons.length + 1;
+                state.planktons.push(newPlankton);
+            }
+        },
         REMOVE_OFFICE(state, office) {
             const key = state.offices.findIndex(_office => _office.id === office.id);
+
             state.offices.splice(key, 1);
-        }
+        },
+        REMOVE_PLANKTON(state, office) {
+            const key = state.planktons.findIndex(_office => _office.id === office.id);
+
+            state.planktons.splice(key, 1);
+        },
     },
     actions: {
         initStore ({commit}) {
@@ -45,8 +62,14 @@ const store = new Vuex.Store({
         saveOffice({commit}, {office}) {
             commit('SAVE_OFFICE', office);
         },
+        savePlankton({commit}, {plankton}) {
+            commit('SAVE_PLANKTON', plankton);
+        },
         removeOffice({commit}, {office}) {
             commit('REMOVE_OFFICE', office);
+        },
+        removePlankton({commit}, {plankton}) {
+            commit('REMOVE_PLANKTON', plankton);
         }
     }
 });
