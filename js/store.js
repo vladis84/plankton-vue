@@ -15,38 +15,41 @@ const store = new Vuex.Store({
         }
     },
     mutations: {
-        SET_STORE(state, data) {
+
+        INIT_STORE(state, data) {
             state.offices = data.offices;
             state.planktons = data.planktons;
         },
+
         SAVE_OFFICE(state, office) {
             const oldOffice = state.offices.find(_office => _office.id === office.id);
 
             if (oldOffice) {
                 Object.assign(oldOffice, office);
-            }
-            else {
+            } else {
                 office.id = state.offices.length + 1;
                 state.offices.push(office);
             }
 
         },
+
         SAVE_PLANKTON(state, newPlankton) {
             const oldPlankton = state.planktons.find(plankton => plankton.id === newPlankton.id);
 
             if (oldPlankton) {
                 Object.assign(oldPlankton, newPlankton);
-            }
-            else {
+            } else {
                 newPlankton.id = state.planktons.length + 1;
                 state.planktons.push(newPlankton);
             }
         },
+
         REMOVE_OFFICE(state, office) {
             const key = state.offices.findIndex(_office => _office.id === office.id);
 
             state.offices.splice(key, 1);
         },
+
         REMOVE_PLANKTON(state, office) {
             const key = state.planktons.findIndex(_office => _office.id === office.id);
 
@@ -54,20 +57,30 @@ const store = new Vuex.Store({
         },
     },
     actions: {
-        initStore ({commit}) {
+
+        initStore({commit}) {
             $.get('data.json', function (data) {
-                commit('SET_STORE', data);
+                commit('INIT_STORE', data);
             });
         },
+
         saveOffice({commit}, {office}) {
             commit('SAVE_OFFICE', office);
         },
-        savePlankton({commit}, {plankton}) {
-            commit('SAVE_PLANKTON', plankton);
+
+        SAVE_PLANKTON({commit}, {plankton}) {
+            return new Promise(function (resolve, reject) {
+                setTimeout(() => {
+                    commit('SAVE_PLANKTON', plankton);
+                    resolve();
+                }, 1000);
+            });
         },
+
         removeOffice({commit}, {office}) {
             commit('REMOVE_OFFICE', office);
         },
+
         removePlankton({commit}, {plankton}) {
             commit('REMOVE_PLANKTON', plankton);
         }

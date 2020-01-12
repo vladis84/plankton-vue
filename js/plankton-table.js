@@ -51,13 +51,6 @@ Vue.component('plankton-table', {
       </div>
     `,
 
-    props: {
-        dialog: {
-            type: Object,
-            required: true
-        }
-    },
-
     computed: {
         items() {
             return this.$store.getters.planktons;
@@ -77,12 +70,15 @@ Vue.component('plankton-table', {
         },
 
         edit(plankton) {
-            this.dialog.plankton = Object.assign({}, plankton);
-            $(this.dialog.$el).modal('show');
+            this.$root.$refs.planktonDialog.open(plankton).then((plankton) => {
+                this.$store.dispatch('SAVE_PLANKTON', {plankton}).then(
+                    () => this.$root.$refs.toastr('Планктон успешно обновлён')
+                );
+            });
         },
 
         remove(plankton) {
-            this.$store.dispatch('removePlankton', {plankton});
+            console.log(this.$store.dispatch('removePlankton', {plankton}));
         },
     },
 });

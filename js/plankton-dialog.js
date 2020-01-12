@@ -47,7 +47,7 @@ Vue.component('plankton-dialog', {
                 type="button"
                 class="btn btn-primary"
                 data-dismiss="modal"
-                @click="save(plankton)"
+                @click="save()"
               >
                 Сохранить
               </button>
@@ -58,7 +58,8 @@ Vue.component('plankton-dialog', {
     `,
     data() {
         return {
-            plankton: {}
+            plankton: {},
+            resolve: null,
         }
     },
     computed: {
@@ -73,19 +74,28 @@ Vue.component('plankton-dialog', {
         },
 
         offices() {
-            const offices = [
+            return [
                 {id: null, name: '(Не указан)'},
                 ...this.$store.getters.offices.map(office => {
                     return {id: office.id, name: office.name}
                 })
             ];
-
-            return offices;
         }
     },
+
     methods: {
-        save(plankton) {
-            this.$store.dispatch('savePlankton', {plankton});
+        save() {
+            this.resolve(this.plankton);
         },
+        open(plankton) {
+            this.plankton = Object.assign({}, plankton);
+
+            $(this.$el).modal('show');
+
+            return new Promise( (resolve, reject) => {
+                this.resolve = resolve
+            } );
+
+        }
     }
 });

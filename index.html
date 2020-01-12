@@ -6,10 +6,8 @@
   <title>Planktons Vue</title>
   <link rel="icon" href="favicon.ico">
   <link type="text/css" rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css"/>
+  <link type="text/css" rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"/>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
 </head>
 <body>
@@ -63,13 +61,13 @@
       class="tab-pane fade show active" id="planktons"
       role="tabpanel" aria-labelledby="planktons-tab"
     >
-      <planktons v-bind:dialog="planktonDialog"></planktons>
+      <planktons></planktons>
     </div>
     <div
       class="tab-pane fade show" id="plankton-table"
       role="tabpanel" aria-labelledby="plankton-table-tab"
     >
-      <plankton-table v-bind:dialog="planktonDialog"></plankton-table>
+      <plankton-table></plankton-table>
     </div>
     <div
       class="tab-pane fade"
@@ -85,8 +83,13 @@
     </div>
   </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
 <script src="https://unpkg.com/vue@latest/dist/vue.js"></script>
 <script src="https://unpkg.com/vuex@2.0.0/dist/vuex.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="js/store.js"></script>
 <script src="js/plankton-dialog.js"></script>
 <script src="js/planktons.js"></script>
@@ -96,17 +99,10 @@
     new Vue({
         el: "#app",
         store,
+
         created() {
             this.$store.dispatch('initStore');
-        },
-        mounted() {
-            this.planktonDialog = this.$refs.planktonDialog;
-        },
-
-        data() {
-            return {
-                planktonDialog: {},
-            }
+            this.$refs.toastr = toastr["success"];
         },
 
         computed: {
