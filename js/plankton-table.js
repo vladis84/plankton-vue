@@ -78,7 +78,7 @@ Vue.component('plankton-table', {
         },
 
         remove(plankton) {
-            console.log(this.$store.dispatch('removePlankton', {plankton}));
+            console.log(this.$store.dispatch('REMOVE_PLANKTON', {plankton}));
         },
     },
 });

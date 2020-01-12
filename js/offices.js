@@ -114,10 +114,10 @@ Vue.component('offices', {
             $(this.$refs.officeDialog.$el).modal('show');
         },
         save(office) {
-            this.$store.dispatch('saveOffice', {office});
+            this.$store.dispatch('SAVE_OFFICE', {office});
         },
         remove(office) {
-            this.$store.dispatch('removeOffice', {office});
+            this.$store.dispatch('REMOVE_OFFICE', {office});
         }
     }
 });

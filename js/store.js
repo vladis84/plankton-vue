@@ -58,13 +58,13 @@ const store = new Vuex.Store({
     },
     actions: {
 
-        initStore({commit}) {
+        INIT_STORE({commit}) {
             $.get('data.json', function (data) {
                 commit('INIT_STORE', data);
             });
         },
 
-        saveOffice({commit}, {office}) {
+        SAVE_OFFICE({commit}, {office}) {
             commit('SAVE_OFFICE', office);
         },
 
@@ -77,11 +77,11 @@ const store = new Vuex.Store({
             });
         },
 
-        removeOffice({commit}, {office}) {
+        REMOVE_OFFICE({commit}, {office}) {
             commit('REMOVE_OFFICE', office);
         },
 
-        removePlankton({commit}, {plankton}) {
+        REMOVE_PLANKTON({commit}, {plankton}) {
             commit('REMOVE_PLANKTON', plankton);
         }
     }
