@@ -78,7 +78,12 @@ Vue.component('plankton-table', {
         },
 
         remove(plankton) {
-            console.log(this.$store.dispatch('REMOVE_PLANKTON', {plankton}));
+            const text = `Вы действительно хотите удалить "${plankton.name}" планктон?`;
+
+            this.$root.$refs.confirmDialog.open(text).then(() => {
+                this.$store.dispatch('REMOVE_PLANKTON', {plankton});
+                this.$root.$refs.toastr('Планктон успешно удалён');
+            });
         },
     },
 });

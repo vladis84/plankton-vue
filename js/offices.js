@@ -117,7 +117,13 @@ Vue.component('offices', {
             this.$store.dispatch('SAVE_OFFICE', {office});
         },
         remove(office) {
-            this.$store.dispatch('REMOVE_OFFICE', {office});
+            const text = `Вы действительно хотите удалить "${office.name}" офис?`;
+
+            this.$root.$refs.confirmDialog.open(text).then(() => {
+                this.$store.dispatch('REMOVE_OFFICE', {office});
+                this.$root.$refs.toastr('Офис успешно удалён');
+            });
+
         }
     }
 });
